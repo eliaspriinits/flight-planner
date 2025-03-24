@@ -1,6 +1,8 @@
 package io.github.eliaspriinits.flightplanner.controller;
 
 import io.github.eliaspriinits.flightplanner.dto.FlightDto;
+import io.github.eliaspriinits.flightplanner.service.FlightService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -9,7 +11,10 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/flight")
+@RequiredArgsConstructor
 public class FlightController {
+
+    private final FlightService flightService;
 
     @GetMapping
     public List<FlightDto> searchFlights(
@@ -27,7 +32,7 @@ public class FlightController {
         if (duration != null) {filterMap.put("duration", duration);}
         if (price != null) {filterMap.put("price", price);}
 
-
-
+        return flightService.getFlightsByFilters(filterMap);
     }
-}
+
+}2

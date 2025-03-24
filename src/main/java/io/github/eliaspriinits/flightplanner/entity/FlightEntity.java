@@ -16,6 +16,6 @@ public class FlightEntity {
     private Long id;
     private String destination;
     private LocalDateTime date;
-    private float duration;
-    private float price;
+    private Float duration;
+    private Float price;
 }

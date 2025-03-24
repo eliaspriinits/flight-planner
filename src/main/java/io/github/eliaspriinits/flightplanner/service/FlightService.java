@@ -7,37 +7,44 @@ import io.github.eliaspriinits.flightplanner.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class FlightService {
 
     private final FlightRepository flightRepository;
+    private final FlightMapper flightMapper;
 
     public void deleteFlight(Long flightId) {
         Optional<FlightEntity> optionalFlight = flightRepository.findById(flightId);
         optionalFlight.ifPresent(flightRepository::delete);
     }
 
-    public List<FlightEntity> filterFlightsByDestination(List<FlightEntity> flights,String destination) {
+    private List<FlightEntity> filterFlights(List<FlightEntity> flights, Object attribute, String type) {
         List<FlightEntity> flightsFiltered = new ArrayList<>();
         for (FlightEntity flightEntity : flights) {
-            if (flightEntity.getDestination().equals(destination)) {
-
+            if (type.equals("destination") && flightEntity.getDestination().equals(attribute)
+            || (type.equals("date") && flightEntity.getDate() == attribute)
+            || (type.equals("duration") && flightEntity.getDuration() == attribute)
+            || (type.equals("price") && flightEntity.getPrice() == attribute)) {
+                flightsFiltered.add(flightEntity);
             }
         }
+        return flightsFiltered;
     }
 
 
-    public List<FlightDto> getFlightsByFilters(HashMap<String, Object> filters) {
+    public List<FlightDto> getFlightsByFilters(Map<String, Object> filters) {
         List<FlightEntity> flights = flightRepository.findAll();
-
         for (String key : filters.keySet()) {
-            if
+            flights = filterFlights(flights, filters.get(key), key);
         }
+        List<FlightDto> flightDtos = new ArrayList<>();
+        for (FlightEntity flightEntity : flights) {
+            FlightDto flightDto = flightMapper.toDto(flightEntity);
+            flightDtos.add(flightDto);
+        }
+        return flightDtos;
     }
 }
