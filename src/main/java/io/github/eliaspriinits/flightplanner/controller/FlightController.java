@@ -35,4 +35,4 @@ public class FlightController {
         return flightService.getFlightsByFilters(filterMap);
     }
 
-}2
+}
