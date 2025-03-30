@@ -19,10 +19,15 @@ public class FlightService {
 
     private final FlightRepository flightRepository;
     private final FlightMapper flightMapper;
+    private final FlightApiService flightApiService;
 
     public void deleteFlight(Long flightId) {
         Optional<FlightEntity> optionalFlight = flightRepository.findById(flightId);
         optionalFlight.ifPresent(flightRepository::delete);
+    }
+
+    public void fetchFlights(String origin, String date) {
+        flightApiService.fetchAndSaveFlights(origin, date);
     }
 
     public FlightDto bookSeat(Long flightId, String seatNumber) {
@@ -51,10 +56,8 @@ public class FlightService {
 
 
     public List<FlightDto> getFlightsByFilters(Map<String, Object> filters) {
-        // Create an initial query
         Specification<FlightEntity> specification = Specification.where(null);
 
-        // Build specifications based on filters
         for (Map.Entry<String, Object> entry : filters.entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
@@ -67,13 +70,11 @@ public class FlightService {
                 specification = specification.and(FlightSpecifications.hasMinDuration((Float) value));
             } else if ("maxPrice".equals(key) && value instanceof Float) {
                 specification = specification.and(FlightSpecifications.hasMaxPrice((Float) value));
-            } // Add more filters as needed
+            }
         }
 
-        // Apply the specification to the repository
         List<FlightEntity> flights = flightRepository.findAll(specification);
 
-        // Convert the FlightEntity list to FlightDto list
         return flights.stream()
                 .map(flightMapper::toDto)
                 .collect(Collectors.toList());

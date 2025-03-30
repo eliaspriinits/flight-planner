@@ -21,11 +21,16 @@ public class FlightController {
 
     @GetMapping("/search")
     public ResponseEntity<List<FlightDto>> searchFlights(
+            String origin,
             @RequestParam(required = false) String destination,
             @RequestParam(required = false) LocalDateTime date,
             @RequestParam(required = false) Float minDuration,
             @RequestParam(required = false) Float maxPrice) {
 
+        if (origin == null) {
+            return ResponseEntity.noContent().build();
+        }
+        flightService.fetchFlights(origin, date.toString());
         logger.info("Searching flights");
         logger.info(flightService.filterFlights(destination, date, minDuration, maxPrice).toString());
         return ResponseEntity.ok(flightService.filterFlights(destination, date, minDuration, maxPrice));

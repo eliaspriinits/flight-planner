@@ -7,11 +7,15 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <!-- Create the 'flights' table -->
-    <changeSet id="1" author="yourname">
+    <changeSet id="1" author="elias">
         <createTable tableName="flights">
             <column name="id" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="origin" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="destination" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
@@ -28,7 +32,7 @@
     </changeSet>
 
     <!-- Create the 'seats' table -->
-    <changeSet id="2" author="yourname">
+    <changeSet id="2" author="elias">
         <createTable tableName="seats">
             <column name="id" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>

@@ -13,6 +13,7 @@ public class FlightEntity {
     private Long id;
 
     private String destination;
+    private String origin;
     private LocalDateTime date;
     private float duration;
     private float price;
