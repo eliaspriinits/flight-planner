@@ -1,6 +1,5 @@
 package io.github.eliaspriinits.flightplanner.dto;
 
-import io.github.eliaspriinits.flightplanner.FlightType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -8,6 +7,7 @@ import java.util.List;
 
 @Data
 public class FlightDto {
+     private Long id;
      private String destination;
      private LocalDateTime date;
      private float duration;
@@ -15,8 +15,5 @@ public class FlightDto {
      private int seatCapacity;
      private int seatsAvailable;
      private List<String> availableSeats;
-
-     public int getSeatsAvailable() {
-          return availableSeats != null ? availableSeats.size() : 0;
-     }
+     private List<SeatDto> seats;
 }

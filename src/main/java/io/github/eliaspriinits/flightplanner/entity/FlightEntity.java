@@ -1,5 +1,6 @@
 package io.github.eliaspriinits.flightplanner.entity;
 
+import io.github.eliaspriinits.flightplanner.SeatStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -23,25 +24,25 @@ public class FlightEntity {
     private List<SeatEntity> seats;
 
     public int getSeatsAvailable() {
-        return (int) seats.stream().filter(seat -> seat.getStatus() == SeatEntity.SeatStatus.AVAILABLE).count();
+        return (int) seats.stream().filter(seat -> seat.getStatus() == SeatStatus.AVAILABLE).count();
     }
 
     public void bookSeat(String seatNumber) {
         SeatEntity seat = seats.stream()
-                .filter(s -> s.getSeatNumber().equals(seatNumber) && s.getStatus() == SeatEntity.SeatStatus.AVAILABLE)
+                .filter(s -> s.getSeatNumber().equals(seatNumber) && s.getStatus() == SeatStatus.AVAILABLE)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Seat not available!"));
 
-        seat.setStatus(SeatEntity.SeatStatus.BOOKED);
+        seat.setStatus(SeatStatus.BOOKED);
     }
 
     public void cancelSeat(String seatNumber) {
         SeatEntity seat = seats.stream()
-                .filter(s -> s.getSeatNumber().equals(seatNumber) && s.getStatus() == SeatEntity.SeatStatus.BOOKED)
+                .filter(s -> s.getSeatNumber().equals(seatNumber) && s.getStatus() == SeatStatus.BOOKED)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Seat is not booked!"));
 
-        seat.setStatus(SeatEntity.SeatStatus.AVAILABLE);
+        seat.setStatus(SeatStatus.AVAILABLE);
     }
 }
 

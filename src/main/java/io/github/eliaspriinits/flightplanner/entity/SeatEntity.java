@@ -1,12 +1,13 @@
 package io.github.eliaspriinits.flightplanner.entity;
 
+import io.github.eliaspriinits.flightplanner.SeatStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "seats")
 public class SeatEntity {
-    public enum SeatStatus {BOOKED, AVAILABLE}
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

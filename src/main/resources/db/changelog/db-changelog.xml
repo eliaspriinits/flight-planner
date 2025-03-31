@@ -7,6 +7,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <!-- Create the 'flights' table -->
+
     <changeSet id="1" author="elias">
         <createTable tableName="flights">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -34,7 +35,7 @@
     <!-- Create the 'seats' table -->
     <changeSet id="2" author="elias">
         <createTable tableName="seats">
-            <column name="id" type="BIGINT">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="flight_id" type="BIGINT">

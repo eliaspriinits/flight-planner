@@ -1,5 +1,6 @@
 package io.github.eliaspriinits.flightplanner.mapper;
 
+import io.github.eliaspriinits.flightplanner.SeatStatus;
 import io.github.eliaspriinits.flightplanner.dto.FlightDto;
 import io.github.eliaspriinits.flightplanner.entity.FlightEntity;
 import io.github.eliaspriinits.flightplanner.entity.SeatEntity;
@@ -23,7 +24,6 @@ public interface FlightMapper {
 
     default List<String> getAvailableSeatNumbers(FlightEntity flight) {
         return flight.getSeats().stream()
-                .filter(seat -> seat.getStatus() == SeatEntity.SeatStatus.AVAILABLE)
                 .map(SeatEntity::getSeatNumber)
                 .collect(Collectors.toList());
     }
