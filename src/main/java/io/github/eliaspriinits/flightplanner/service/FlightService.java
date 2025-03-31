@@ -26,8 +26,8 @@ public class FlightService {
         optionalFlight.ifPresent(flightRepository::delete);
     }
 
-    public void fetchFlights(String origin, String date) {
-        flightApiService.fetchAndSaveFlights(origin, date);
+    public void fetchFlights(String origin, String date, String destination) {
+        flightApiService.fetchAndSaveFlights(origin, date, destination);
     }
 
     public FlightDto bookSeat(Long flightId, String seatNumber) {

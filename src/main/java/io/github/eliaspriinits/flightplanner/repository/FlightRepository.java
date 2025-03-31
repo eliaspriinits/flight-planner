@@ -14,12 +14,5 @@ import java.util.Optional;
 public interface FlightRepository extends JpaRepository<FlightEntity, Long>, JpaSpecificationExecutor<FlightEntity> {
 
     List<FlightEntity> findAll();
-    List<FlightEntity> findByOriginAndDate(String origin, LocalDate date);
-    List<FlightEntity> findByDestinationAndDate(String destination, LocalDate date);
-    List<FlightEntity> findFlightsByDestination(String destination);
-    List<FlightEntity> findFlightsByDate(LocalDateTime date);
-    List<FlightEntity> findFlightsByDuration(float duration);
-    List<FlightEntity> findFlightsByPrice(float price);
-    Optional<FlightEntity> findFlightById(Long id);
-
+    List<FlightEntity> findByOriginAndDestinationAndDate(String origin, String destination, LocalDateTime date);
 }
